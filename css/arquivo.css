@@ -1,0 +1,120 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: #f4f6f8;
+  color: #333;
+  line-height: 1.5;
+  padding: 20px;
+}
+
+h1 {
+  margin-bottom: 20px;
+  color: #222;
+  text-align: center;
+}
+
+a{
+    color: #ffffff;
+    text-decoration: none;
+    list-style: none;
+}
+li{
+    list-style: none;
+    border: 1px solid #ddd;
+    padding: 10px;
+    border-radius: 3px;
+    background: #2196f3;
+}
+main{
+    width: 600px;
+    margin: auto;
+    padding: 20px;  
+    background: #fff;
+    border-radius: 8px; 
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+.container{
+    display: flex;
+    text-align: center;
+    gap: 20px;
+}
+/* Container geral */
+.container-arquivos {
+  max-width: 900px;
+  margin: 0 auto;
+  background: #fff;
+  border-radius: 8px;
+  padding: 20px;
+  box-shadow: 0 4px 8px rgb(0 0 0 / 0.1);
+}
+
+/* Cada agendamento */
+.agendamento {
+  background: #fafafa;
+  border-left: 5px solid #2196f3;
+  padding: 15px 20px;
+  margin-bottom: 15px;
+  border-radius: 5px;
+  transition: box-shadow 0.3s ease;
+}
+
+.agendamento:hover {
+  box-shadow: 0 4px 12px rgb(33 150 243 / 0.3);
+}
+
+.agendamento p {
+  margin-bottom: 6px;
+  font-size: 1rem;
+}
+
+.agendamento strong {
+  color: #0d47a1;
+}
+
+/* Botão de ação */
+button {
+  background-color: #2196f3;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+  margin-top: 10px;
+}
+
+button:hover {
+  background-color: #1565c0;
+}
+
+/* Mensagem quando não houver arquivos */
+.sem-arquivos {
+  text-align: center;
+  padding: 40px;
+  color: #777;
+  font-style: italic;
+  font-size: 1.1rem;
+}
+
+/* Responsividade */
+@media (max-width: 600px) {
+  .container-arquivos {
+    padding: 15px;
+  }
+
+  .agendamento {
+    padding: 12px 15px;
+  }
+
+  button {
+    width: 100%;
+    padding: 12px;
+  }
+}

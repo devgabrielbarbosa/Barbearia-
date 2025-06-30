@@ -1,0 +1,103 @@
+<!-- admin.html -->
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="css/admin.css" />
+    <link rel="stylesheet" href="css/style.css" />
+    <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <meta
+    name="description"
+    content="Painel de administração da barbearia para gerenciar agendamentos e visualizar faturamento."
+    />
+    <meta
+    name="keywords"
+    content="barbearia, agendamentos, administração, painel, faturamento, serviços"
+    />
+    <meta name="author" content="Seu Nome" />
+    <meta name="robots" content="index, follow" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script type="module" src="js/cliente.js" defer></script>
+    <title>Dashboard - Barbearia</title>
+  </head>
+  <body>
+    <header>
+      <nav>
+        <ul>
+          <li><a href="index.html">Página Inicial</a></li>
+          <li><a href="admin.html">Painel de Administração</a></li>
+          <li><a href="arquivos.html">Agendamentos Arquivados</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <section>
+        <h1>Agendamento de Serviços</h1>
+        <form id="form-agendamento">
+          <input type="text" id="nome" placeholder="Seu nome" required />
+          <input type="date" id="data" required />
+          <select id="hora" required></select>
+          <select id="servico" required>
+            <option value="">Tipo de serviço</option>
+            <option value="Corte">Corte</option>
+            <option value="Barba">Barba</option>
+            <option value="Corte + Barba">Corte + Barba</option>
+            <option value="Corte + Barba + Sobrancelha">
+              Corte + Barba + Sobrancelha
+            </option>
+            <option value="Sobrancelha">Sobrancelha</option>
+          </select>
+          <select id="pagamento" required>
+            <option value="">Forma de pagamento</option>
+            <option value="Pix">Pix</option>
+            <option value="Débito">Débito</option>
+            <option value="Crédito">Crédito</option>
+            <option value="Dinheiro">Dinheiro</option>
+          </select>
+          <div id="totalAPagar">Valor total: <strong>R$ 0,00</strong></div>
+
+          <button type="submit">Agendar</button>
+        </form>
+      </section>
+      <h1>Painel do Administrador</h1>
+
+      <section class="resumo">
+        <p>
+          Total agendamentos hoje: <strong id="totalAgendamentos">0</strong>
+        </p>
+        <p>
+          Total recebido hoje:
+          <strong>R$ <span id="valorTotal">0,00</span></strong>
+        </p>
+      </section>
+
+      <section>
+        <div id="lista-agendamentos"></div>
+      </section>
+      <section>
+        <div class="grafico-container">
+          <div class="grafico-top">
+            <h2>Faturamento por Forma de Pagamento</h2>
+            <div class="filtros">
+              <button id="btnDiario" class="ativo">Diário</button>
+              <button id="btnMensal">Mensal</button>
+            </div>
+          </div>
+          <canvas id="graficoPagamento" width="200" height="300"></canvas>
+        </div>
+      </section>
+      <section>
+        <br />
+        <h2>Agendamentos Finalizados</h2>
+        <div id="agendamentos-finalizados"></div>
+      </section>
+    </main>
+
+    <script type="module" src="js/admin.js"></script>
+  </body>
+</html>

@@ -1,0 +1,223 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', Arial, sans-serif;
+  background-color: #f4f4f4;
+  color: #333;
+  margin: 0;
+}
+
+h1 {
+  text-align: center;
+  margin-bottom: 30px;
+  color: #222;
+  font-size: 28px;
+  font-weight: 600;
+}
+/* Estilização do header e menu de navegação */
+header {
+  background-color: #1e1e2f;
+  padding: 1rem 2rem;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+nav ul li a {
+  color: #ffffff;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+}
+
+nav ul li a:hover {
+  background-color: #4caf50;
+  color: #fff;
+}
+
+.resumo {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  margin-bottom: 30px;
+  gap: 10px;
+}
+
+.resumo p {
+  font-size: 18px;
+  flex: 1 1 45%;
+}
+
+#lista-agendamentos {
+  margin-bottom: 30px;
+  background-color: #ffffff;
+  padding: 15px;
+  border-radius: 10px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+}
+.agendamento {
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-left: 5px solid #2196f3;
+  background-color: #f9f9f9;
+}
+
+.agendamento p {
+  margin: 4px 0;
+}
+
+button {
+  margin-top: 5px;
+  padding: 5px 10px;
+  background: #4caf50;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+button:hover {
+  background: #388e3c;
+}
+
+
+.grafico-container {
+  background-color: #ffffff;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.grafico-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.grafico-top h2 {
+  font-size: 20px;
+  color: #222;
+}
+
+.filtros {
+  display: flex;
+  gap: 10px;
+}
+
+.filtros button {
+  padding: 8px 14px;
+  border: none;
+  border-radius: 6px;
+  background-color: #e0e0e0;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background 0.3s;
+}
+
+.filtros button:hover {
+  background-color: #d0d0d0;
+}
+
+.filtros button.ativo {
+  background-color: #007bff;
+  color: white;
+}
+
+canvas {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  background: #fff;
+}
+.agendamento {
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 8px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+  transition: background 0.3s ease;
+}
+
+/* Pendente = amarelo */
+.agendamento.pendente {
+  background-color: #fff8e1;
+  border-left: 5px solid #ffc107;
+}
+
+/* Confirmado = verde */
+.agendamento.confirmado {
+  background-color: #e8f5e9;
+  border-left: 5px solid #4caf50;
+}
+
+/* Cancelado = vermelho claro (caso use) */
+.agendamento.cancelado {
+  background-color: #ffebee;
+  border-left: 5px solid #f44336;
+}
+
+/* Botões dentro dos cards */
+.agendamento button {
+  margin-right: 8px;
+  margin-top: 8px;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 4px;
+  background-color: #fffdfd;
+  cursor: pointer;
+  transition: background 0.2s;
+  color: #007bff;
+}
+
+.agendamento button:hover {
+  background-color: #fffdfd;
+}
+
+
+/* Responsivo */
+@media (max-width: 600px) {
+  .resumo {
+    flex-direction: column;
+  }
+
+  .resumo p {
+    flex: 1 1 100%;
+    text-align: center;
+  }
+
+  .grafico-top {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .filtros {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .filtros button {
+    flex: 1;
+    text-align: center;
+  }
+}
