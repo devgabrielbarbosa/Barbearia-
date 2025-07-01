@@ -124,7 +124,27 @@ document.addEventListener("DOMContentLoaded", () => {
       btnDiario.classList.contains("ativo") ? "diario" : "mensal"
     );
   });
+// Função para cancelar agendamento
+async function cancelarAgendamento(id) {
+  try {
+    // Remove do Firestore
+    await deleteDoc(doc(db, "agendamentos", id));
 
+    // Remove da tela
+    const agendamentoElemento = document.getElementById(`agendamento-${id}`);
+    if (agendamentoElemento) {
+      agendamentoElemento.remove();
+    }
+
+    alert("Agendamento cancelado com sucesso.");
+  } catch (error) {
+    console.error("Erro ao cancelar agendamento:", error);
+    alert("Ocorreu um erro ao cancelar o agendamento.");
+  }
+}
+
+// Torna a função global se necessário
+window.cancelarAgendamento = cancelarAgendamento;
 window.Arquivar = async (id, botao) => {
   try {
     const ref = doc(db, "agendamentos", id);
