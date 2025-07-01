@@ -32,6 +32,8 @@ document.addEventListener("DOMContentLoaded", () => {
         <p><strong>${ag.nome}</strong> - ${ag.data} às ${ag.hora}</p>
         <p>Serviço: ${ag.servico} | Pagamento: ${ag.pagamento}</p>
         <p>Valor: R$ ${ag.valor},00</p>
+        <p>Status: ${ag.status}</p>
+        <p>Observações: ${ag.observacoes || "Nenhuma"}</p>
         <hr>
       `;
       lista.appendChild(div);
