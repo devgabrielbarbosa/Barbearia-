@@ -102,7 +102,33 @@ button:hover {
   font-style: italic;
   font-size: 1.1rem;
 }
+footer {
+  margin-top: 2rem;
+  background-color: #00796b;
+  color: white;
+  padding: 1rem;
+  border-radius: 12px;
+  text-align: center;
+}
 
+footer .footer-container p {
+  margin: 0.3rem 0;
+}
+
+footer .redes-sociais {
+  margin-top: 0.5rem;
+}
+
+footer .redes-sociais a {
+  color: #e0f2f1;
+  text-decoration: none;
+  margin: 0 0.3rem;
+  transition: color 0.3s;
+}
+
+footer .redes-sociais a:hover {
+  color: #b2dfdb;
+}
 /* Responsividade */
 @media (max-width: 600px) {
   .container-arquivos {

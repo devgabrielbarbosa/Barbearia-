@@ -125,3 +125,15 @@ form.addEventListener("submit", async (e) => {
     alert("Erro ao agendar. Tente novamente.");
   }
 });
+
+  const menuToggle = document.getElementById("menu-toggle");
+  const menu = document.getElementById("menu");
+
+  menuToggle.addEventListener("click", () => {
+    menu.classList.toggle("ativo");
+    
+    // Acessibilidade: atualiza o atributo ARIA
+    const expanded = menuToggle.getAttribute("aria-expanded") === "true";
+    menuToggle.setAttribute("aria-expanded", !expanded);
+  });
+

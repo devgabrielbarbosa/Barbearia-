@@ -11,6 +11,14 @@ import {
   getDoc,
   addDoc,
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+  document.addEventListener("DOMContentLoaded", () => {
+    const toggle = document.getElementById("menu-toggle");
+    const menu = document.getElementById("menu");
+
+    toggle.addEventListener("click", () => {
+      menu.classList.toggle("ativo");
+    });
+  });
 
 window.Arquivar = async (id) => {
   try {
