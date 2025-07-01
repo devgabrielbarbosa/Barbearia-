@@ -3,7 +3,9 @@ import {
   collection,
   query,
   where,
-  onSnapshot
+  onSnapshot,
+  doc,
+  deleteDoc
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -25,18 +27,43 @@ document.addEventListener("DOMContentLoaded", () => {
 
     snapshot.forEach(doc => {
       const ag = doc.data();
-      const div = document.createElement("div");
-      div.classList.add("agendamento");
-
-      div.innerHTML = `
-        <p><strong>${ag.nome}</strong> - ${ag.data} às ${ag.hora}</p>
-        <p>Serviço: ${ag.servico} | Pagamento: ${ag.pagamento}</p>
-        <p>Valor: R$ ${ag.valor},00</p>
-        <p>Status: ${ag.status}</p>
-        <p>Observações: ${ag.observacoes || "Nenhuma"}</p>
-        <hr>
-      `;
-      lista.appendChild(div);
+      ag.id = doc.id; // salva o ID do documento para depois poder excluir
+      renderAgendamento(ag);
     });
   });
+
+  function cancelarAgendamento(id, divElemento) {
+    if (confirm("Tem certeza que deseja cancelar esse agendamento?")) {
+      const docRef = doc(db, "agendamentos", id);
+
+      deleteDoc(docRef)
+        .then(() => {
+          divElemento.remove(); // Remove o agendamento da tela
+          console.log("Agendamento cancelado com sucesso.");
+        })
+        .catch((error) => {
+          console.error("Erro ao cancelar agendamento:", error);
+        });
+    }
+  }
+
+  function renderAgendamento(item) {
+    const div = document.createElement("div");
+    div.classList.add("agendamento");
+
+    div.innerHTML = `
+      <p><strong>${item.nome}</strong> - ${item.data} às ${item.hora}</p>
+      <p>Serviço: ${item.servico} | Pagamento: ${item.pagamento}</p>
+      <p>Valor: R$ ${item.valor},00</p>
+      <p>Status: ${item.status}</p>
+      <button class="btn-cancelar">Cancelar</button>
+      <hr>
+    `;
+
+    div.querySelector(".btn-cancelar").addEventListener("click", () => {
+      cancelarAgendamento(item.id, div);
+    });
+
+    lista.appendChild(div);
+  }
 });
