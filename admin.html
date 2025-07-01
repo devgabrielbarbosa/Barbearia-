@@ -26,43 +26,48 @@
     <title>Dashboard - Barbearia</title>
   </head>
   <body>
-    <header>
-      <nav>
-        <ul>
-          <li><a href="index.html">Página Inicial</a></li>
-          <li><a href="admin.html">Painel de Administração</a></li>
-          <li><a href="arquivos.html">Agendamentos Arquivados</a></li>
-        </ul>
+      <header class="cabecalho">
+      <div class="logo">Barbearia</div>
+      <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menu">
+        &#9776;
+      </button>
+      <nav class="menu" id="menu">
+        <a href="#">Início</a>
+        <a href="#">Serviços</a>
+        <a href="#">Agendamento</a>
+        <a href="./arquivos.html">Arquivados</a>
       </nav>
     </header>
     <main>
       <section>
         <h1>Agendamento de Serviços</h1>
         <form id="form-agendamento">
-          <input type="text" id="nome" placeholder="Seu nome" required />
-          <input type="date" id="data" required />
-          <select id="hora" required></select>
-          <select id="servico" required>
-            <option value="">Tipo de serviço</option>
-            <option value="Corte">Corte</option>
-            <option value="Barba">Barba</option>
-            <option value="Corte + Barba">Corte + Barba</option>
-            <option value="Corte + Barba + Sobrancelha">
-              Corte + Barba + Sobrancelha
-            </option>
-            <option value="Sobrancelha">Sobrancelha</option>
-          </select>
-          <select id="pagamento" required>
-            <option value="">Forma de pagamento</option>
-            <option value="Pix">Pix</option>
-            <option value="Débito">Débito</option>
-            <option value="Crédito">Crédito</option>
-            <option value="Dinheiro">Dinheiro</option>
-          </select>
-          <div id="totalAPagar">Valor total: <strong>R$ 0,00</strong></div>
+        <input type="text" id="nome" placeholder="Seu nome" required />
+        <input type="date" id="data" required />
+        <select id="hora" required></select>
+        <select id="servico" required>
+          <option value="">Tipo de serviço</option>
+          <option value="Corte" selected>Corte</option>
+          <!-- já selecionado -->
+          <option value="Barba">Barba</option>
+          <option value="Corte + Barba">Corte + Barba</option>
+          <option value="Corte + Barba + Sobrancelha">
+            Corte + Barba + Sobrancelha
+          </option>
+          <option value="Sobrancelha">Sobrancelha</option>
+        </select>
 
-          <button type="submit">Agendar</button>
-        </form>
+        <select id="pagamento" required>
+          <option value="">Forma de pagamento</option>
+          <option value="Pix">Pix</option>
+          <option value="Débito">Débito</option>
+          <option value="Crédito">Crédito</option>
+          <option value="Dinheiro">Dinheiro</option>
+        </select>
+        <div id="totalAPagar">Valor total: <strong>R$ 0,00</strong></div>
+
+        <button type="submit">Agendar</button>
+      </form>
       </section>
       <h1>Painel do Administrador</h1>
 

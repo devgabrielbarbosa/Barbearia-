@@ -12,10 +12,41 @@ const horariosDisponiveis = [
   "08:00", "08:40", "09:20", "10:00", "10:40", "11:20", "12:00", "12:40",
   "13:20", "14:00", "14:40", "15:20", "16:00", "16:40", "17:20", "18:00", "18:40", "19:20", "20:00"
 ];
+
 // Elementos HTML
 const form = document.getElementById("form-agendamento");
 const selectHora = document.getElementById("hora");
 const dataInput = document.getElementById("data");
+const selectServico = document.getElementById("servico");
+const divValorTotal = document.getElementById("totalAPagar");
+
+// ✅ Valores dos serviços
+const valores = {
+  "Corte": 30,
+  "Barba": 20,
+  "Corte + Barba": 45,
+  "Corte + Barba + Sobrancelha": 60,
+  "Sobrancelha": 15
+};
+
+// ✅ Função para atualizar o valor total
+function atualizarValorTotal() {
+  const servicoSelecionado = selectServico.value;
+  const preco = valores[servicoSelecionado] || 0;
+
+  if (servicoSelecionado) {
+    divValorTotal.style.display = "block";
+    divValorTotal.innerHTML = `Valor total: <strong>R$ ${preco.toFixed(2).replace(".", ",")}</strong>`;
+  } else {
+    divValorTotal.style.display = "none";
+  }
+}
+
+// ✅ Atualiza o valor sempre que o serviço mudar
+selectServico.addEventListener("change", atualizarValorTotal);
+
+// ✅ Atualiza o valor quando a página carregar
+document.addEventListener("DOMContentLoaded", atualizarValorTotal);
 
 // Verifica horários disponíveis quando a data muda
 dataInput.addEventListener("change", async () => {
@@ -60,31 +91,12 @@ form.addEventListener("submit", async (e) => {
   const nome = document.getElementById("nome").value;
   const data = dataInput.value;
   const hora = selectHora.value;
-  const servico = document.getElementById("servico").value;
+  const servico = selectServico.value;
   const pagamento = document.getElementById("pagamento").value;
 
-const valores = {
-  "Corte": 30,
-  "Barba": 20,
-  "Corte + Barba": 45,
-  "Corte + Barba + Sobrancelha": 60,
-  "Sobrancelha": 15
-};
-
-
-const selectServico = document.getElementById("servico");
-const divValorTotal = document.getElementById("totalAPagar");
-
-// Atualiza o valor ao mudar o serviço
-selectServico.addEventListener("change", () => {
-  const servicoSelecionado = selectServico.value;
-  const preco = valores[servicoSelecionado] || 0;
-
-  divValorTotal.textContent = `Valor total: R$ ${preco.toFixed(2).replace(".", ",")}`;
-});
-
-  // Verifica se o horário ainda está disponível antes de enviar
-  const q = query(collection(db, "agendamentos"),
+  // Verifica se o horário ainda está disponível
+  const q = query(
+    collection(db, "agendamentos"),
     where("data", "==", data),
     where("hora", "==", hora)
   );
@@ -107,6 +119,7 @@ selectServico.addEventListener("change", () => {
     alert("Agendamento feito com sucesso!");
     form.reset();
     selectHora.innerHTML = '<option value="">Escolha o horário</option>';
+    atualizarValorTotal(); // Limpa ou atualiza o valor após reset
   } catch (erro) {
     console.error("Erro ao agendar:", erro);
     alert("Erro ao agendar. Tente novamente.");

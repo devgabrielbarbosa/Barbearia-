@@ -1,56 +1,90 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <title>Agendamento - Barbearia</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="icon" href="img/favicon.ico" type="image/x-icon">
-  <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-  <header></header>
-  <main>
-  <h1>Agendamento de Serviços</h1>
-  <form id="form-agendamento">
-    <input type="text" id="nome" placeholder="Seu nome" required>
-    <input type="date" id="data" required>
-    <select id="hora"required>
-    </select>
-    <select id="servico" required>
-  <option value="">Tipo de serviço</option>
-  <option value="Corte">Corte</option>
-  <option value="Barba">Barba</option>
-  <option value="Corte + Barba">Corte + Barba</option>
-  <option value="Corte + Barba + Sobrancelha">Corte + Barba + Sobrancelha</option>
-  <option value="Sobrancelha">Sobrancelha</option>
-</select>
-    <select id="pagamento" required>
-      <option value="">Forma de pagamento</option>
-      <option value="Pix">Pix</option>
-      <option value="Débito">Débito</option>
-      <option value="Crédito">Crédito</option>
-      <option value="Dinheiro">Dinheiro</option>
-    </select> 
-    <div id="totalAPagar">Valor total: <strong>R$ 0,00</strong></div>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Agendamento - Barbearia</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
+    <link rel="stylesheet" href="css/style.css" />
+  </head>
+  <body>
+    <header class="cabecalho">
+      <div class="logo">Barbearia</div>
+      <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menu">
+        &#9776;
+      </button>
+      <nav class="menu" id="menu">
+        <a href="#">Início</a>
+        <a href="#">Serviços</a>
+        <a href="#">Agendamento</a>
+        <a href="#">Contato</a>
+      </nav>
+    </header>
 
-    <button type="submit">Agendar</button>
-  </form>
-  </main>
+    <main>
+      <h1>Agendamento de Serviços</h1>
+      <form id="form-agendamento">
+        <input type="text" id="nome" placeholder="Seu nome" required />
+        <input type="date" id="data" required />
+        <select id="hora" required></select>
+        <select id="servico" required>
+          <option value="">Tipo de serviço</option>
+          <option value="Corte" selected>Corte</option>
+          <!-- já selecionado -->
+          <option value="Barba">Barba</option>
+          <option value="Corte + Barba">Corte + Barba</option>
+          <option value="Corte + Barba + Sobrancelha">
+            Corte + Barba + Sobrancelha
+          </option>
+          <option value="Sobrancelha">Sobrancelha</option>
+        </select>
 
+        <select id="pagamento" required>
+          <option value="">Forma de pagamento</option>
+          <option value="Pix">Pix</option>
+          <option value="Débito">Débito</option>
+          <option value="Crédito">Crédito</option>
+          <option value="Dinheiro">Dinheiro</option>
+        </select>
+        <div id="totalAPagar">Valor total: <strong>R$ 0,00</strong></div>
 
-<footer>
-  <div class="footer-container">
-    <p>© 2025 Barbearia Exemplo. Todos os direitos reservados.</p>
-    <p>Endereço: Rua Principal, 123 - Sua Cidade, Estado</p>
-    <p>Contato: (63) 99999-9999 | email@barbeariaexemplo.com</p>
-    <div class="redes-sociais">
-      <a href="#" aria-label="Facebook" target="_blank" rel="noopener noreferrer">Facebook</a> |
-      <a href="#" aria-label="Instagram" target="_blank" rel="noopener noreferrer">Instagram</a> |
-      <a href="#" aria-label="WhatsApp" target="_blank" rel="noopener noreferrer">WhatsApp</a>
-    </div>
-  </div>
-</footer>
+        <button type="submit">Agendar</button>
+      </form>
+    </main>
 
-  <script type="module" src="js/cliente.js"></script>
-</body>
+    <footer>
+      <div class="footer-container">
+        <p>© 2025 Barbearia Exemplo. Todos os direitos reservados.</p>
+        <p>Endereço: Rua Principal, 123 - Sua Cidade, Estado</p>
+        <p>Contato: (63) 99999-9999 | email@barbeariaexemplo.com</p>
+        <div class="redes-sociais">
+          <a
+            href="#"
+            aria-label="Facebook"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Facebook</a
+          >
+          |
+          <a
+            href="#"
+            aria-label="Instagram"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Instagram</a
+          >
+          |
+          <a
+            href="#"
+            aria-label="WhatsApp"
+            target="_blank"
+            rel="noopener noreferrer"
+            >WhatsApp</a
+          >
+        </div>
+      </div>
+    </footer>
+
+    <script type="module" src="js/cliente.js"></script>
+  </body>
 </html>
