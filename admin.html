@@ -21,12 +21,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script type="module" src="js/cliente.js" defer></script>
     <title>Dashboard - Barbearia</title>
   </head>
   <body>
     <header class="cabecalho">
-      <div class="logo">Barbearia</div>
+   <img  class="logo" src="./assets/logo.png" alt="">
       <button class="menu-toggle" id="menu-toggle">&#9776;</button>
       <nav class="menu" id="menu">
         <a href="#">Início</a>
@@ -37,45 +36,15 @@
 
     <main>
       <section>
-        <h1>Agendamento de Serviços</h1>
-        <form id="form-agendamento">
-          <input type="text" id="nome" placeholder="Seu nome" required />
-          <input type="date" id="data" required />
-          <select id="hora" required></select>
-          <select id="servico" required>
-            <option value="">Tipo de serviço</option>
-            <option value="Corte" selected>Corte</option>
-            <option value="Barba">Barba</option>
-            <option value="Corte + Barba">Corte + Barba</option>
-            <option value="Corte + Barba + Sobrancelha">
-              Corte + Barba + Sobrancelha
-            </option>
-            <option value="Sobrancelha">Sobrancelha</option>
-          </select>
-          <select id="pagamento" required>
-            <option value="">Forma de pagamento</option>
-            <option value="Pix">Pix</option>
-            <option value="Débito">Débito</option>
-            <option value="Crédito">Crédito</option>
-            <option value="Dinheiro">Dinheiro</option>
-          </select>
-          <div id="totalAPagar">Valor total: <strong>R$ 0,00</strong></div>
-
-          <button type="submit">Agendar</button>
-        </form>
-      </section>
-      <h1>Painel do Administrador</h1>
-
-      <section class="resumo">
-        <p>
-          Total agendamentos hoje: <strong id="totalAgendamentos">0</strong>
-        </p>
-        <p>
-          Total recebido hoje:
-          <strong>R$ <span id="valorTotal">0,00</span></strong>
-        </p>
-      </section>
-
+        <form id="formBarbeiro">
+  <input type="text" id="nomeBarbeiro" placeholder="Nome do barbeiro" required />
+  <button type="submit">Cadastrar</button>
+  <p id="msgBarbeiro"></p>
+</form>
+    <section id="agendamentos-por-barbeiro">
+  <h2>Agendamentos por Barbeiro</h2>
+  <div id="barbeiros-container"></div>
+</section>
       <section>
         <h2>Agendamentos Pendentes</h2>
         <div id="lista-agendamentos"></div>

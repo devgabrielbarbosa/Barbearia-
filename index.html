@@ -2,31 +2,89 @@
 <html lang="pt-br">
   <head>
     <meta charset="UTF-8" />
-    <title>Agendamento - Barbearia</title>
+    <title>Agendamento | Barbearia Rei do Corte</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="css/style.css" />
   </head>
   <body>
     <header class="cabecalho">
-      <div class="logo">Barbearia</div>
+     <img class="logo" src="./assets/logo.png" alt="">
       <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menu">
         &#9776;
       </button>
       <nav class="menu" id="menu">
         <a href="#">Início</a>
-        <a href="#">Serviços</a>
-        <a href="#">Agendamento</a>
-        <a href="#">Contato</a>
+        <a href="#depoimento">Depoimentos</a>
+        <a href="#agendamento">Agendamento</a>
       </nav>
     </header>
 
     <main>
-      <h1>Agendamento de Serviços</h1>
+  
+<section class="video-corte">
+   <h1>Barbearia Rei do Corte</h1>
+  <iframe 
+    width="100%" height="250" 
+    src="https://www.youtube.com/embed/6eW4c8tyK10?start=0&end=10&autoplay=1&mute=1&loop=1&playlist=6eW4c8tyK10" 
+    frameborder="0" 
+    allow="autoplay; encrypted-media" 
+    allowfullscreen>
+  </iframe>
+</section>
+
+
+
+<section class="mapa">
+  <h2>Onde estamos</h2>
+  <iframe
+     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3971.3294235402925!2d-48.21240922418688!3d-7.19219857114962!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x92d9b8c6fb5f5ed3%3A0xf6b5bba40e86f210!2sBarbearia%20Estilo%20Fino!5e0!3m2!1spt-BR!2sbr!4v1720103290522!5m2!1spt-BR!2sbr"
+    width="100%" height="300" style="border:0; border-radius: 10px;"
+    allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+  </iframe>
+  ></iframe>
+</section>
+<section class="profissionais">
+  <h2>Nossos Profissionais</h2>
+  <div class="cards">
+    <div class="card">
+      <img src="./assets/barbeiro.jpg" alt="João - Barbeiro" />
+      <h3>João Silva</h3>
+      <p>10 anos de experiência, especialista em fades e cortes modernos.</p>
+    </div>
+    <div class="card">
+      <img src="./assets/Barbearias.-SCA.jpg" alt="Carlos - Estilo" />
+      <h3>Carlos Rocha</h3>
+      <p>Expert em cortes Afros e barba completa.</p>
+    </div>
+  </div>
+  <div class="destaque">
+  <h2>Destaques da Barbearia</h2>
+<ul class="lista-destaque">
+  <li class="itens">Atendimento aos Clientes</li>
+  <li class="itens">Espaço diferenciado</li>
+  <li class="itens">Localização</li>
+  <li class="itens">Profissionais Qualificados</li>
+  <li class="itens">Pontualidade</li>
+  <li class="itens">Limpeza</li>
+  <li class="itens">Ambiente Climatizado</li>
+</ul>
+  <p class="texto-destaque">
+    Nossa barbearia é reconhecida por seu atendimento excepcional, ambiente
+    acolhedor e profissionais altamente qualificados. Estamos localizados no
+    coração da cidade, oferecendo serviços de alta qualidade com pontualidade e
+    limpeza impecável.
+  </div>
+</section>
+
+<section id="agendamento">
+<h1>Agendamento de Serviços</h1>
       <form id="form-agendamento">
         <input type="text" id="nome" placeholder="Seu nome" required />
         <input type="date" id="data" required />
+
         <select id="hora" required></select>
+
         <select id="servico" required>
           <option value="">Tipo de serviço</option>
           <option value="Corte" selected>Corte</option>
@@ -46,44 +104,85 @@
           <option value="Crédito">Crédito</option>
           <option value="Dinheiro">Dinheiro</option>
         </select>
+        <select id="barbeiro">
+          <option value="">Selecione o Barbeiro</option>
+        </select>
         <div id="totalAPagar">Valor total: <strong>R$ 0,00</strong></div>
 
         <button type="submit">Agendar</button>
       </form>
+</section>
+
+<section class="depoimentos" id="depoimento">
+  <h2>O que dizem nossos clientes</h2>
+
+  <div class="depoimento">
+    <p>“Melhor barbearia da cidade! Atendimento incrível e resultado impecável.”</p>
+    <strong>– Felipe Andrade</strong>
+  </div>
+
+  <div class="depoimento">
+    <p>“Sempre saio de lá me sentindo um rei. Os caras manjam muito!”</p>
+    <strong>– Lucas Menezes</strong>
+  </div>
+
+  <div class="depoimento">
+    <p>“Ambiente top, atendimento respeitoso e corte no estilo. Recomendo demais!”</p>
+    <strong>– André Carvalho</strong>
+  </div>
+
+  <div class="depoimento">
+    <p>“Eles respeitam o horário marcado, são rápidos e caprichosos. Nota mil!”</p>
+    <strong>– Tiago Rocha</strong>
+  </div>
+
+  <div class="depoimento">
+    <p>“Fui indicado por um amigo e agora sou cliente fiel. Atendimento 10/10.”</p>
+    <strong>– Matheus Lima</strong>
+  </div>
+</section>
+
+
+<section>
+      <div>
+        <a href="https://wa.me/5563999999999" target="_blank" class="whatsapp-btn">
+      <img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp" />
+       </a>
+      </div>
+</section>
     </main>
 
-    <footer>
-      <div class="footer-container">
-        <p>© 2025 Barbearia Exemplo. Todos os direitos reservados.</p>
-        <p>Endereço: Rua Principal, 123 - Sua Cidade, Estado</p>
-        <p>Contato: (63) 99999-9999 | email@barbeariaexemplo.com</p>
-        <div class="redes-sociais">
-          <a
-            href="#"
-            aria-label="Facebook"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Facebook</a
-          >
-          |
-          <a
-            href="#"
-            aria-label="Instagram"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Instagram</a
-          >
-          |
-          <a
-            href="#"
-            aria-label="WhatsApp"
-            target="_blank"
-            rel="noopener noreferrer"
-            >WhatsApp</a
-          >
-        </div>
+    <footer class="rodape">
+  <div class="footer-container">
+    <div class="footer-logo">
+      <h2>Barbearia</h2>
+      <p>Estilo, qualidade e atendimento profissional.</p>
+    </div>
+
+    <div class="footer-links">
+      <h3>Links Rápidos</h3>
+      <ul>
+        <li><a href="#">Início</a></li>
+        <li><a href="#">Serviços</a></li>
+        <li><a href="#">Agendamento</a></li>
+        <li><a href="#">Contato</a></li>
+      </ul>
+    </div>
+
+    <div class="footer-social">
+      <h3>Redes Sociais</h3>
+      <div class="icons">
+        <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/733/733547.png" alt="Facebook" /></a>
+        <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/733/733558.png" alt="Instagram" /></a>
+        <a href="#"><img src="https://cdn-icons-png.flaticon.com/512/733/733585.png" alt="WhatsApp" /></a>
       </div>
-    </footer>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <p>&copy; 2025 Barbearia Reido Corte. Todos os direitos reservados.</p>
+  </div>
+</footer>
 
     <script type="module" src="js/cliente.js"></script>
   </body>

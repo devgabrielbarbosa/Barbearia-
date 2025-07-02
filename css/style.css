@@ -22,13 +22,16 @@ header{
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 15px 20px;
   position: relative;
 }
 
 .logo {
-  font-size: 1.6rem;
-  font-weight: bold;
+  width: 100px;         /* ou ajuste conforme necessário */
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #FFD700;  /* opcional: contorno dourado */
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);  /* sombra suave */
 }
 
 .menu {
@@ -96,6 +99,161 @@ form select:focus {
   border-color: #007bff;
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
 }
+.video-banner {
+  position: relative;
+  height: 60vh;
+  overflow: hidden;
+}
+
+.video-bg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(0.6);
+}
+
+.overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
+  text-align: center;
+}
+
+.mapa {
+  padding: 2rem;
+  color: #fff;
+  text-align: center;
+}
+.profissionais {
+  color: #2a2a2a;
+  padding: 3rem 1rem;
+  text-align: center;
+}
+
+.cards {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.card {
+  padding: 1.5rem;
+  border-radius: 12px;
+  width: 350px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.4);
+  transition: transform 0.3s ease;
+}
+
+.card img {
+  width: 100%;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.card:hover {
+  transform: scale(1.05);
+}
+.destaque{
+  margin-top: 20PX;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+.lista-destaque {
+  text-align: left;
+  margin: 20px 0;
+  padding: 0;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.lista-destaque {
+  list-style: none;
+  padding: 0;
+}
+
+.lista-destaque .itens {
+  position: relative;
+  padding-left: 30px;
+  margin-bottom: 10px;
+  font-size: 1.1rem;
+  color: #333;
+}
+
+.lista-destaque .itens::before {
+  content: "★";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: gold;
+  font-size: 1.2rem;
+}
+.texto-destaque {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: start
+}
+.depoimentos {
+  
+  color: #ededed;
+  padding: 60px 20px;
+  text-align: center;
+}
+
+.depoimentos h2 {
+  font-size: 2rem;
+  margin-bottom: 40px;
+  color: #3f3f3f;
+  text-transform: uppercase;
+}
+
+.depoimento {
+  background-color: #252525;
+  border-left: 5px solid #FFD700;
+  padding: 30px 20px;
+  max-width: 500px;
+  margin: 20px auto;
+  font-style: italic;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+  border-radius: 10px;
+  transition: transform 0.3s ease;
+}
+
+.depoimento:hover {
+  transform: scale(1.03);
+}
+
+.depoimento p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.depoimento strong {
+  display: block;
+  margin-top: 20px;
+  font-size: 1rem;
+  color: #ccc;
+}
+
+.whatsapp-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  z-index: 999;
+}
+
+.whatsapp-btn img {
+  width: 100%;
+  height: 100%;
+}
+
 
 #totalAPagar {
   font-size: 16px;
@@ -123,13 +281,11 @@ form button:hover {
   background: #0056b3;
   transform: translateY(-2px);
 }
-
-/* FOOTER */
-footer {
-  background-color: #222;
-  color: #fff;
-  padding: 30px 20px;
-  text-align: center;
+.rodape {
+  background-color: #323532;
+  color: #f7f6f6;
+  padding: 40px 20px 20px;
+  font-family: 'Segoe UI', Arial, sans-serif;
 }
 
 .footer-container {
@@ -141,21 +297,67 @@ footer {
   margin: 0 auto;
 }
 
-.footer-container p {
-  margin: 8px 0;
-}
-
-.redes-sociais a {
-  color: #ff9800;
-  text-decoration: none;
-  margin: 0 8px;
-  transition: color 0.3s;
-}
-
-.redes-sociais a:hover {
+.footer-logo h2 {
   color: #fff;
+  font-size: 24px;
 }
 
+.footer-logo p {
+  font-size: 14px;
+  margin-top: 8px;
+  color: #e4e4e4;
+}
+
+.footer-links h3,
+.footer-social h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  color: #cfcccc;
+}
+
+.footer-links ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-links ul li {
+  margin-bottom: 8px;
+}
+
+.footer-links ul li a {
+  color: #c6c2c2;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-links ul li a:hover {
+  color: #ff9800;
+}
+
+.footer-social .icons a {
+  margin-right: 10px;
+}
+
+.footer-social img {
+  width: 28px;
+  height: 28px;
+  filter: brightness(0.9);
+  transition: transform 0.3s;
+}
+
+.footer-social img:hover {
+  transform: scale(1.1);
+  filter: brightness(1.1);
+}
+
+.footer-bottom {
+  text-align: center;
+  margin-top: 30px;
+  border-top: 1px solid #444;
+  padding-top: 15px;
+  font-size: 14px;
+  color: #aaa;
+}
 /* RESPONSIVIDADE */
 @media (max-width: 768px) {
   .menu {
@@ -163,7 +365,7 @@ footer {
     flex-direction: column;
     background-color: #005B50;
     position: absolute;
-    top: 70px;
+    top: 120px;
     right: 0px;
     width: 100%;
     padding: 10px;
@@ -181,6 +383,11 @@ footer {
 
   main {
     margin: 20px;
+  }
+  .cards {
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
   }
 
   footer {

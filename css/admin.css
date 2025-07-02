@@ -57,10 +57,13 @@ nav ul li a {
 
 /* Logo */
 .logo {
-  font-size: 1.5rem;
-  font-weight: bold;
+  width: 100px;         /* ou ajuste conforme necessário */
+  height: 100px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid #FFD700;  /* opcional: contorno dourado */
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);  /* sombra suave */
 }
-
 /* Menu padrão (desktop) */
 .menu {
   display: flex;
@@ -402,7 +405,7 @@ form button:hover {
     display: none;
     flex-direction: column;
     position: absolute;
-    top: 80px;
+    top: 130px;
     background-color: #005B50;
     padding: 15px;
     width: 100%;

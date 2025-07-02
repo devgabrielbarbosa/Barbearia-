@@ -7,6 +7,24 @@ import {
   where
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
+document.addEventListener("DOMContentLoaded", async () => {
+  const selectBarbeiro = document.getElementById("barbeiro");
+
+  try {
+    const snapshot = await getDocs(collection(db, "barbeiros"));
+
+    snapshot.forEach((doc) => {
+      const barbeiro = doc.data().nome;
+      const option = document.createElement("option");
+      option.value = barbeiro;
+      option.textContent = barbeiro;
+      selectBarbeiro.appendChild(option);
+    });
+  } catch (error) {
+    console.error("Erro ao carregar barbeiros:", error);
+  }
+});
+
 // Horários disponíveis fixos
 const horariosDisponiveis = [
   "08:00", "08:40", "09:20", "10:00", "10:40", "11:20", "12:00", "12:40",
@@ -19,6 +37,7 @@ const selectHora = document.getElementById("hora");
 const dataInput = document.getElementById("data");
 const selectServico = document.getElementById("servico");
 const divValorTotal = document.getElementById("totalAPagar");
+const barbeiroSelect = document.getElementById("barbeiro");
 
 // ✅ Valores dos serviços
 const valores = {
@@ -93,6 +112,7 @@ form.addEventListener("submit", async (e) => {
   const hora = selectHora.value;
   const servico = selectServico.value;
   const pagamento = document.getElementById("pagamento").value;
+  const barbeiro = barbeiroSelect.value;
 
   // Verifica se o horário ainda está disponível
   const q = query(
@@ -114,7 +134,9 @@ form.addEventListener("submit", async (e) => {
       servico,
       pagamento,
       valor: valores[servico],
-      status: "Pendente"
+      status: "Pendente",
+      barbeiro,
+      arquivado: false
     });
     alert("Agendamento feito com sucesso!");
     form.reset();
