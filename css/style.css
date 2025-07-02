@@ -128,7 +128,7 @@ form select:focus {
 }
 .profissionais {
   color: #2a2a2a;
-  padding: 3rem 1rem;
+  padding: 23px;
   text-align: center;
 }
 
@@ -384,10 +384,15 @@ form button:hover {
   main {
     margin: 20px;
   }
+  .profissionais{
+    max-width: 400px;
+    margin: 0 auto;
+  }
+
   .cards {
     flex-direction: column;
     align-items: center;
-    width: 100%;
+    width: 400px;
   }
 
   footer {
