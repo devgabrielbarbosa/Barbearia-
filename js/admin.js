@@ -288,3 +288,48 @@ document.getElementById("formBarbeiro")?.addEventListener("submit", async (e) =>
     msg.textContent = "Erro ao cadastrar barbeiro.";
   }
 });
+// Modais
+const modalCadastro = document.getElementById("modalCadastro");
+const modalLista = document.getElementById("modalLista");
+const abrirCadastro = document.getElementById("abrirCadastro");
+const abrirLista = document.getElementById("abrirLista");
+const fecharCadastro = document.getElementById("fecharCadastro");
+const fecharLista = document.getElementById("fecharLista");
+
+abrirCadastro.onclick = () => modalCadastro.style.display = "flex";
+abrirLista.onclick = async () => {
+  modalLista.style.display = "flex";
+  await carregarBarbeiros();
+};
+fecharCadastro.onclick = () => modalCadastro.style.display = "none";
+fecharLista.onclick = () => modalLista.style.display = "none";
+
+// Formulário
+document.getElementById("formBarbeiro").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const nome = document.getElementById("nomeBarbeiro").value.trim();
+  if (nome === "") return;
+
+  await addDoc(collection(db, "barbeiros"), { nome });
+  document.getElementById("msgBarbeiro").textContent = "Barbeiro cadastrado!";
+  document.getElementById("formBarbeiro").reset();
+});
+
+// Listar e excluir
+async function carregarBarbeiros() {
+  const lista = document.getElementById("listaBarbeiros");
+  lista.innerHTML = "";
+  const snapshot = await getDocs(collection(db, "barbeiros"));
+  snapshot.forEach(docSnap => {
+    const li = document.createElement("li");
+    li.textContent = docSnap.data().nome;
+    const btn = document.createElement("button");
+    btn.textContent = "Excluir";
+    btn.onclick = async () => {
+      await deleteDoc(doc(db, "barbeiros", docSnap.id));
+      li.remove();
+    };
+    li.appendChild(btn);
+    lista.appendChild(li);
+  });
+}

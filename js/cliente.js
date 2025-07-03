@@ -159,3 +159,9 @@ form.addEventListener("submit", async (e) => {
     menuToggle.setAttribute("aria-expanded", !expanded);
   });
 
+document.addEventListener("DOMContentLoaded", () => {
+  const video = document.querySelector("video");
+  video.play().catch((e) => {
+    console.warn("Autoplay bloqueado. Usuário precisa interagir.");
+  });
+});

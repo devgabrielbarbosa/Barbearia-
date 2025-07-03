@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
     <link rel="stylesheet" href="css/style.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap" rel="stylesheet">
+
   </head>
   <body>
     <header class="cabecalho">
@@ -24,23 +26,23 @@
   
 <section class="video-corte">
    <h1>Barbearia Rei do Corte</h1>
- <video width="100%" height="250" controls autoplay muted loop>
+ <video width="100%" height="250" controls autoplay muted loop playsinline >
   <source src="./assets/video.mp4" type="video/mp4">
   Seu navegador não suporta vídeos HTML5.
 </video>
 </section>
 
-
-
 <section class="mapa">
   <h2>Onde estamos</h2>
+  <p>Estamos localizados na Av. Cônego João Lima Nº 255, em frente às Lojas Nosso Lar.</p>
+  
   <iframe
-     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3971.3294235402925!2d-48.21240922418688!3d-7.19219857114962!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x92d9b8c6fb5f5ed3%3A0xf6b5bba40e86f210!2sBarbearia%20Estilo%20Fino!5e0!3m2!1spt-BR!2sbr!4v1720103290522!5m2!1spt-BR!2sbr"
+    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3971.3294235402925!2d-48.21240922418688!3d-7.19219857114962!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x92d9b8c6fb5f5ed3%3A0xf6b5bba40e86f210!2sBarbearia%20Estilo%20Fino!5e0!3m2!1spt-BR!2sbr!4v1720103290522!5m2!1spt-BR!2sbr"
     width="100%" height="300" style="border:0; border-radius: 10px;"
     allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
   </iframe>
-  ></iframe>
 </section>
+
 <section class="profissionais">
   <h2>Nossos Profissionais</h2>
   <div class="cards">
@@ -102,7 +104,7 @@
           <option value="Dinheiro">Dinheiro</option>
         </select>
         <select id="barbeiro">
-          <option value="">Selecione o Barbeiro</option>
+          <option value=""></option>
         </select>
         <div id="totalAPagar">Valor total: <strong>R$ 0,00</strong></div>
 
