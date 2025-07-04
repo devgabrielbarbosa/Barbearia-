@@ -537,4 +537,36 @@ form button:hover {
   footer {
     padding: 20px 10px;
   }
+  .chatbot-container {
+    width: 90% !important; /* usa quase toda a largura da tela */
+    right: 5% !important;  /* centraliza um pouco à direita */
+    bottom: 70px !important;
+    max-height: 60vh !important; /* altura máxima para caber na tela */
+  }
+
+  .chat-messages {
+    height: 40vh !important; /* maior área para mensagens */
+  }
+
+  .chat-input input {
+    font-size: 16px;
+    padding: 10px;
+  }
+
+  #enviarMensagem {
+    padding: 10px 15px;
+    font-size: 16px;
+  }
+
+  .chat-toggle {
+    bottom: 15px !important;
+    right: 15px !important;
+    font-size: 28px !important;
+    padding: 18px !important;
+  }
+
+  #encerrarAtendimento {
+    padding: 12px !important;
+    font-size: 16px !important;
+  }
 }
