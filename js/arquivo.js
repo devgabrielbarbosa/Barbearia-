@@ -1,12 +1,16 @@
-import { db } from './firebase-config.js';
 import {
   collection,
   query,
   where,
   onSnapshot,
   doc,
-  deleteDoc
+  deleteDoc,
+  updateDoc,
+  getDocs,
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import { db } from "./firebase-config.js";
+
+let agendamentosArquivados = [];
 
 document.addEventListener("DOMContentLoaded", () => {
   const lista = document.getElementById("listaArquivados");
@@ -18,6 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
   );
 
   onSnapshot(q, (snapshot) => {
+    agendamentosArquivados = [];
     lista.innerHTML = "";
 
     if (snapshot.empty) {
@@ -25,45 +30,90 @@ document.addEventListener("DOMContentLoaded", () => {
       return;
     }
 
-    snapshot.forEach(doc => {
-      const ag = doc.data();
-      ag.id = doc.id; // salva o ID do documento para depois poder excluir
-      renderAgendamento(ag);
+    snapshot.forEach(docSnap => {
+      const ag = docSnap.data();
+      ag.id = docSnap.id;
+      agendamentosArquivados.push(ag);
     });
+
+    renderizarAgendamentos(agendamentosArquivados);
   });
+});
 
-  function cancelarAgendamento(id, divElemento) {
-    if (confirm("Tem certeza que deseja cancelar esse agendamento?")) {
-      const docRef = doc(db, "agendamentos", id);
+ function renderizarAgendamentos(lista) {
+  const container = document.getElementById("listaArquivados");
+  container.innerHTML = "";
 
-      deleteDoc(docRef)
-        .then(() => {
-          divElemento.remove(); // Remove o agendamento da tela
-          console.log("Agendamento cancelado com sucesso.");
-        })
-        .catch((error) => {
-          console.error("Erro ao cancelar agendamento:", error);
-        });
-    }
+  if (lista.length === 0) {
+    container.innerHTML = "<p>Nenhum agendamento encontrado.</p>";
+    return;
   }
 
-  function renderAgendamento(item) {
+  lista.forEach(agendamento => {
     const div = document.createElement("div");
     div.classList.add("agendamento");
-
     div.innerHTML = `
-      <p><strong>${item.nome}</strong> - ${item.data} às ${item.hora}</p>
-      <p>Serviço: ${item.servico} | Pagamento: ${item.pagamento}</p>
-      <p>Valor: R$ ${item.valor},00</p>
-      <p>Status: ${item.status}</p>
+      <p><strong>${agendamento.nome}</strong> - ${agendamento.data} às ${agendamento.hora}</p>
+      <p>Serviço: ${agendamento.servico} | Pagamento: ${agendamento.pagamento}</p>
+      <p>Valor: R$ ${agendamento.valor},00</p>
+      <p>Status: ${agendamento.status}</p>
+      <p>Barbeiro: ${agendamento.nomeBarbeiro || agendamento.barbeiro || "Não informado"}</p>
       <button class="btn-cancelar">Cancelar</button>
-      <hr>
+      <hr />
     `;
 
     div.querySelector(".btn-cancelar").addEventListener("click", () => {
-      cancelarAgendamento(item.id, div);
+      cancelarAgendamento(agendamento.id, div);
     });
 
-    lista.appendChild(div);
+    container.appendChild(div);
+  });
+}
+
+function cancelarAgendamento(id, divElemento) {
+  if (confirm("Tem certeza que deseja cancelar esse agendamento?")) {
+    const docRef = doc(db, "agendamentos", id);
+    deleteDoc(docRef)
+      .then(() => {
+        divElemento.remove();
+        console.log("Agendamento cancelado com sucesso.");
+      })
+      .catch((error) => {
+        console.error("Erro ao cancelar agendamento:", error);
+      });
   }
+}
+async function filtrarAgendamentos() {
+  const data = document.getElementById("filtroData").value;
+  const barbeiro = document.getElementById("filtroBarbeiro").value.toLowerCase();
+  const status = document.getElementById("filtroStatus").value;
+
+  const q = query(collection(db, "agendamentos"), where("arquivado", "==", true));
+  const snapshot = await getDocs(q);
+
+  const resultados = [];
+
+  snapshot.forEach((docSnap) => {
+    const item = docSnap.data();
+
+    const condData = data ? item.data === data : true;
+    const condBarbeiro = barbeiro ? (item.barbeiro || "").toLowerCase().includes(barbeiro) : true;
+    const condStatus = status ? item.status === status : true;
+
+    if (condData && condBarbeiro && condStatus) {
+      resultados.push({ id: docSnap.id, ...item });
+    }
+  });
+
+  renderizarAgendamentos(resultados);
+}
+
+
+// Botões
+document.getElementById("botaoFiltrar").addEventListener("click", filtrarAgendamentos);
+document.getElementById("botaoLimpar").addEventListener("click", () => {
+  document.getElementById("filtroData").value = "";
+  document.getElementById("filtroBarbeiro").value = "";
+  document.getElementById("filtroStatus").value = "";
+  renderizarAgendamentos(agendamentosArquivados);
 });

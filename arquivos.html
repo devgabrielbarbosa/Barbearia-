@@ -11,14 +11,34 @@
     <script type="module" src="js/arquivo.js"></script>
   </head>
   <body>
-    <main>
-      <section>
-        <div class="container">
+    <header>
+<div class="container">
           <ul>
             <li><a href="admin.html">Voltar</a></li>
           </ul>
           <h1>Agendamentos Arquivados</h1>
         </div>
+    </header>
+    <main>
+      <section>
+        
+
+     <div class="filtros">
+  <input type="date" id="filtroData" />
+  <input type="text" id="filtroBarbeiro" placeholder="Nome do barbeiro" />
+  <select id="filtroStatus">
+    <option value="">Todos</option>
+    <option value="Finalizado">Finalizado</option>
+    <option value="Cancelado">Cancelado</option>
+    <option value="Pendente">Pendente</option>
+  </select>
+  <button id="botaoFiltrar">Filtrar</button>
+  <button id="botaoLimpar">Limpar Filtros</button>
+</div>
+
+
+<div id="listaArquivados"></div>
+
 
         <div id="listaArquivados"></div>
       </section>

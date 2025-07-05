@@ -272,22 +272,6 @@ async function carregarBarbeirosComAgendamentos() {
   }
 }
 
-document.getElementById("formBarbeiro")?.addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const nome = document.getElementById("nomeBarbeiro").value.trim();
-  const msg = document.getElementById("msgBarbeiro");
-  if (!nome) return;
-
-  try {
-    await addDoc(collection(db, "barbeiros"), { nome });
-    msg.textContent = "Barbeiro cadastrado!";
-    document.getElementById("formBarbeiro").reset();
-    carregarBarbeirosComAgendamentos();
-  } catch (error) {
-    console.error("Erro ao cadastrar barbeiro:", error);
-    msg.textContent = "Erro ao cadastrar barbeiro.";
-  }
-});
 // Modais
 const modalCadastro = document.getElementById("modalCadastro");
 const modalLista = document.getElementById("modalLista");
@@ -305,15 +289,30 @@ fecharCadastro.onclick = () => modalCadastro.style.display = "none";
 fecharLista.onclick = () => modalLista.style.display = "none";
 
 // Formulário
-document.getElementById("formBarbeiro").addEventListener("submit", async (e) => {
-  e.preventDefault();
-  const nome = document.getElementById("nomeBarbeiro").value.trim();
-  if (nome === "") return;
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("formBarbeiro");
 
-  await addDoc(collection(db, "barbeiros"), { nome });
-  document.getElementById("msgBarbeiro").textContent = "Barbeiro cadastrado!";
-  document.getElementById("formBarbeiro").reset();
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const nome = document.getElementById("nomeBarbeiro").value.trim();
+    const msg = document.getElementById("msgBarbeiro");
+    if (!nome) return;
+
+    // Verifica se já existe um barbeiro com o mesmo nome
+    const q = query(collection(db, "barbeiros"), where("nome", "==", nome));
+    const querySnapshot = await getDocs(q);
+
+    if (!querySnapshot.empty) {
+      msg.textContent = "Esse barbeiro já está cadastrado.";
+      return;
+    }
+
+    await addDoc(collection(db, "barbeiros"), { nome });
+    msg.textContent = "Barbeiro cadastrado!";
+    form.reset();
+  });
 });
+
 
 // Listar e excluir
 async function carregarBarbeiros() {
@@ -332,4 +331,52 @@ async function carregarBarbeiros() {
     li.appendChild(btn);
     lista.appendChild(li);
   });
+}
+const secoesContainer = document.getElementById("secoesBarbeiros");
+
+onSnapshot(collection(db, "agendamentos"), (snapshot) => {
+  const agendamentos = {};
+
+  snapshot.forEach((doc) => {
+    const dados = doc.data();
+    const barbeiro = dados.barbeiro || "Desconhecido";
+
+    if (!agendamentos[barbeiro]) {
+      agendamentos[barbeiro] = [];
+    }
+
+    agendamentos[barbeiro].push({ id: doc.id, ...dados });
+  });
+
+  renderizarSeções(agendamentos);
+});
+
+function renderizarSeções(agendamentosPorBarbeiro) {
+  secoesContainer.innerHTML = ""; // limpa tudo antes de renderizar
+
+  for (const barbeiro in agendamentosPorBarbeiro) {
+    const agendamentos = agendamentosPorBarbeiro[barbeiro];
+
+    const secao = document.createElement("section");
+    secao.className = "secao-barbeiro";
+
+    const titulo = document.createElement("h2");
+    titulo.textContent = `Barbeiro: ${barbeiro}`;
+    secao.appendChild(titulo);
+
+    const lista = document.createElement("ul");
+
+    agendamentos.forEach((ag) => {
+      const item = document.createElement("li");
+      item.innerHTML = `
+        <strong>${ag.nome}</strong> - ${ag.data} às ${ag.hora} (${ag.servico}) 
+        | Pagamento: ${ag.pagamento} | R$ ${ag.valor.toFixed(2)}
+        <br>Status: <strong>${ag.status}</strong>
+      `;
+      lista.appendChild(item);
+    });
+
+    secao.appendChild(lista);
+    secoesContainer.appendChild(secao);
+  }
 }
