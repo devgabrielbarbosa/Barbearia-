@@ -28,6 +28,7 @@ Firebase Firestore – banco de dados em tempo real
 Configure as credenciais do Firebase no arquivo firebase-config.js
 
 📂 barbearia-rei-do-corte
+
 ├── index.html
 
 ├── admin.html
@@ -37,6 +38,10 @@ Configure as credenciais do Firebase no arquivo firebase-config.js
 ├── css/
 
 │   └── style.css
+
+│   └── admin.css
+
+│   └── arquivos.css
 
 ├── js/
 
