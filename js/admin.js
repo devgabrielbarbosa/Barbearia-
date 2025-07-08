@@ -1,4 +1,4 @@
-import { db } from "./firebase-config.js";
+import { db } from "../firebaise/firebase-config.js";
 import {
   collection,
   onSnapshot,
@@ -12,11 +12,11 @@ import {
   addDoc,
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-const menuToggle = document.querySelector('.menu-toggle');
-const menu = document.querySelector('.menu');
+const menuToggle = document.querySelector(".menu-toggle");
+const menu = document.querySelector(".menu");
 
-menuToggle.addEventListener('click', () => {
-  menu.classList.toggle('ativo');
+menuToggle.addEventListener("click", () => {
+  menu.classList.toggle("ativo");
 });
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -55,13 +55,14 @@ document.addEventListener("DOMContentLoaded", () => {
   const lista = document.getElementById("lista-agendamentos");
   const totalAgendamentos = document.getElementById("totalAgendamentos");
   const valorTotal = document.getElementById("valorTotal");
-  const ctx = document.getElementById("graficoPagamento").getContext("2d");
+  const ctx = document.getElementById("graficoPagamento")?.getContext("2d");
   const btnDiario = document.getElementById("btnDiario");
   const btnMensal = document.getElementById("btnMensal");
-  const containerFinalizados = document.getElementById("agendamentos-finalizados");
+  const containerFinalizados = document.getElementById(
+    "agendamentos-finalizados"
+  );
 
   const hoje = new Date().toISOString().split("T")[0];
-  const q = query(collection(db, "agendamentos"), where("data", "==", hoje));
 
   onSnapshot(collection(db, "agendamentos"), (snapshot) => {
     lista.innerHTML = "";
@@ -90,13 +91,25 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         div.innerHTML = `
-          <p><strong>${agendamento.nome}</strong> - ${agendamento.data} às ${agendamento.hora} - ${agendamento.servico}</p>
-          <p>Pagamento: ${agendamento.pagamento} | Valor: R$ ${agendamento.valor.toFixed(2).replace('.', ',')}</p>
+          <p><strong>${agendamento.nome}</strong> - ${agendamento.data} às ${
+          agendamento.hora
+        } - ${agendamento.servico}</p>
+          <p>Pagamento: ${agendamento.pagamento} | Valor: R$ ${agendamento.valor
+          .toFixed(2)
+          .replace(".", ",")}</p>
           <p>Status: <strong>${agendamento.status}</strong></p>
           <p>Barbeiro: ${agendamento.barbeiro || "Não especificado"}</p>
-          ${agendamento.status !== "Confirmado" ? `<button onclick="confirmarAgendamento('${id}')">Confirmar</button>` : ""}
+          ${
+            agendamento.status !== "Confirmado"
+              ? `<button onclick="confirmarAgendamento('${id}')">Confirmar</button>`
+              : ""
+          }
           <button onclick="cancelarAgendamento('${id}')">Cancelar</button>
-          ${agendamento.status === "Confirmado" ? `<button onclick="finalizarAgendamento('${id}')">Finalizar</button>` : ""}
+          ${
+            agendamento.status === "Confirmado"
+              ? `<button onclick="finalizarAgendamento('${id}')">Finalizar</button>`
+              : ""
+          }
         `;
 
         lista.appendChild(div);
@@ -120,38 +133,106 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   });
 
-  if (containerFinalizados) {
-    onSnapshot(
-      query(
-        collection(db, "agendamentos"),
-        where("status", "==", "Finalizado"),
-        where("arquivado", "==", false)
-      ),
-      (snapshot) => {
-        containerFinalizados.innerHTML = "";
-        if (snapshot.empty) {
-          containerFinalizados.innerHTML = "<p>Nenhum agendamento finalizado ainda.</p>";
-          return;
-        }
+ const container = document.getElementById("listaAgendamentos"); // container onde vai renderizar
 
-        snapshot.forEach((doc) => {
-          const ag = doc.data();
-          const div = document.createElement("div");
-          div.classList.add("agendamento");
-          div.innerHTML = `
-            <p><strong>${ag.nome}</strong> - ${ag.data} às ${ag.hora}</p>
-            <p>Serviço: ${ag.servico} | Pagamento: ${ag.pagamento}</p>
-            <p>Valor: R$ ${ag.valor},00</p>
-            <button onclick="Arquivar('${doc.id}', this)">Arquivar</button>
-            <button onclick="cancelarAgendamento('${doc.id}')">Cancelar</button>
-            <hr>
-          `;
-          containerFinalizados.appendChild(div);
-        });
-      }
-    );
+// Função para carregar agendamentos conforme filtro
+function carregarAgendamentos({ status = "Finalizado", arquivado = false }) {
+  const q = query(
+    collection(db, "agendamentos"),
+    where("status", "==", status),
+    where("arquivado", "==", arquivado)
+  );
+
+  onSnapshot(q, snapshot => {
+    container.innerHTML = "";
+    if (snapshot.empty) {
+      container.innerHTML = `<p>Nenhum agendamento ${arquivado ? "arquivado" : "finalizado não arquivado"} encontrado.</p>`;
+      return;
+    }
+
+    snapshot.forEach(docSnap => {
+      const ag = docSnap.data();
+      ag.id = docSnap.id;
+      renderAgendamento(ag, { arquivado });
+    });
+  });
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+  const container = document.getElementById("listaAgendamentos");
+  if (!container) {
+    console.error("Elemento #listaAgendamentos não encontrado no DOM.");
+    return;
   }
 
+  function carregarAgendamentos({ status = "Finalizado", arquivado = false }) {
+    const q = query(
+      collection(db, "agendamentos"),
+      where("status", "==", status),
+      where("arquivado", "==", arquivado)
+    );
+
+    onSnapshot(q, snapshot => {
+      container.innerHTML = "";
+      if (snapshot.empty) {
+        container.innerHTML = `<p>Nenhum agendamento ${arquivado ? "arquivado" : "finalizado não arquivado"} encontrado.</p>`;
+        return;
+      }
+
+      snapshot.forEach(docSnap => {
+        const ag = docSnap.data();
+        ag.id = docSnap.id;
+        renderAgendamento(ag, { arquivado });
+      });
+    });
+  }
+
+  function renderAgendamento(item, { arquivado }) {
+    const div = document.createElement("div");
+    div.classList.add("agendamento");
+
+    let botoes = "";
+    if (!arquivado) {
+      botoes += `<button onclick="arquivar('${item.id}')">Arquivar</button> `;
+    }
+    botoes += `<button onclick="cancelarAgendamento('${item.id}', this.parentElement)">Cancelar</button>`;
+
+    div.innerHTML = `
+      <p><strong>${item.nome || "Cliente não informado"}</strong> - ${item.data} às ${item.hora}</p>
+      <p>Serviço: ${item.servico || "Não informado"} | Pagamento: ${item.pagamento || "Não informado"}</p>
+      <p>Valor: R$ ${item.valor || "0"},00</p>
+      ${botoes}
+      <hr>
+    `;
+
+    container.appendChild(div);
+  }
+
+  window.arquivar = async function(id) {
+    const docRef = doc(db, "agendamentos", id);
+    try {
+      await updateDoc(docRef, { arquivado: true });
+      console.log("Agendamento arquivado com sucesso.");
+    } catch (error) {
+      console.error("Erro ao arquivar agendamento:", error);
+    }
+  };
+
+  window.cancelarAgendamento = async function(id, divElemento) {
+    if (confirm("Tem certeza que deseja cancelar esse agendamento?")) {
+      const docRef = doc(db, "agendamentos", id);
+      try {
+        await deleteDoc(docRef);
+        divElemento.remove();
+        console.log("Agendamento cancelado com sucesso.");
+      } catch (error) {
+        console.error("Erro ao cancelar agendamento:", error);
+      }
+    }
+  };
+
+  carregarAgendamentos({ status: "Finalizado", arquivado: false });
+});
   btnDiario?.addEventListener("click", () => {
     btnDiario.classList.add("ativo");
     btnMensal.classList.remove("ativo");
@@ -202,7 +283,10 @@ async function atualizarGraficoFiltrado(ctx, filtro = "diario") {
       dataAgendamento.getMonth() === mesAtual &&
       dataAgendamento.getFullYear() === anoAtual;
 
-    if ((filtro === "diario" && condicaoDiaria) || (filtro === "mensal" && condicaoMensal)) {
+    if (
+      (filtro === "diario" && condicaoDiaria) ||
+      (filtro === "mensal" && condicaoMensal)
+    ) {
       if (dados[pagamento] !== undefined) {
         dados[pagamento] += valor;
       }
@@ -272,87 +356,11 @@ async function carregarBarbeirosComAgendamentos() {
   }
 }
 
-// Modais
-const modalCadastro = document.getElementById("modalCadastro");
-const modalLista = document.getElementById("modalLista");
-const abrirCadastro = document.getElementById("abrirCadastro");
-const abrirLista = document.getElementById("abrirLista");
-const fecharCadastro = document.getElementById("fecharCadastro");
-const fecharLista = document.getElementById("fecharLista");
-
-abrirCadastro.onclick = () => modalCadastro.style.display = "flex";
-abrirLista.onclick = async () => {
-  modalLista.style.display = "flex";
-  await carregarBarbeiros();
-};
-fecharCadastro.onclick = () => modalCadastro.style.display = "none";
-fecharLista.onclick = () => modalLista.style.display = "none";
-
-// Formulário
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("formBarbeiro");
-
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
-    const nome = document.getElementById("nomeBarbeiro").value.trim();
-    const msg = document.getElementById("msgBarbeiro");
-    if (!nome) return;
-
-    // Verifica se já existe um barbeiro com o mesmo nome
-    const q = query(collection(db, "barbeiros"), where("nome", "==", nome));
-    const querySnapshot = await getDocs(q);
-
-    if (!querySnapshot.empty) {
-      msg.textContent = "Esse barbeiro já está cadastrado.";
-      return;
-    }
-
-    await addDoc(collection(db, "barbeiros"), { nome });
-    msg.textContent = "Barbeiro cadastrado!";
-    form.reset();
-  });
-});
-
-
-// Listar e excluir
-async function carregarBarbeiros() {
-  const lista = document.getElementById("listaBarbeiros");
-  lista.innerHTML = "";
-  const snapshot = await getDocs(collection(db, "barbeiros"));
-  snapshot.forEach(docSnap => {
-    const li = document.createElement("li");
-    li.textContent = docSnap.data().nome;
-    const btn = document.createElement("button");
-    btn.textContent = "Excluir";
-    btn.onclick = async () => {
-      await deleteDoc(doc(db, "barbeiros", docSnap.id));
-      li.remove();
-    };
-    li.appendChild(btn);
-    lista.appendChild(li);
-  });
-}
-const secoesContainer = document.getElementById("secoesBarbeiros");
-
-onSnapshot(collection(db, "agendamentos"), (snapshot) => {
-  const agendamentos = {};
-
-  snapshot.forEach((doc) => {
-    const dados = doc.data();
-    const barbeiro = dados.barbeiro || "Desconhecido";
-
-    if (!agendamentos[barbeiro]) {
-      agendamentos[barbeiro] = [];
-    }
-
-    agendamentos[barbeiro].push({ id: doc.id, ...dados });
-  });
-
-  renderizarSeções(agendamentos);
-});
+const secoesContainer = document.getElementById("secoesContainer");
 
 function renderizarSeções(agendamentosPorBarbeiro) {
-  secoesContainer.innerHTML = ""; // limpa tudo antes de renderizar
+  if (!secoesContainer) return;
+  secoesContainer.innerHTML = "";
 
   for (const barbeiro in agendamentosPorBarbeiro) {
     const agendamentos = agendamentosPorBarbeiro[barbeiro];
@@ -380,3 +388,78 @@ function renderizarSeções(agendamentosPorBarbeiro) {
     secoesContainer.appendChild(secao);
   }
 }
+
+onSnapshot(collection(db, "agendamentos"), (snapshot) => {
+  const agendamentos = {};
+
+  snapshot.forEach((doc) => {
+    const dados = doc.data();
+    const barbeiro = dados.barbeiro || "Desconhecido";
+
+    if (!agendamentos[barbeiro]) {
+      agendamentos[barbeiro] = [];
+    }
+
+    agendamentos[barbeiro].push({ id: doc.id, ...dados });
+  });
+
+  renderizarSeções(agendamentos);
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  const containerFinalizados = document.getElementById("agendamentos-finalizados");
+
+  const q = query(
+    collection(db, "agendamentos"),
+    where("status", "==", "Finalizado"),
+    where("arquivado", "==", false)
+  );
+
+  onSnapshot(q, (snapshot) => {
+    containerFinalizados.innerHTML = "";
+    if (snapshot.empty) {
+      containerFinalizados.innerHTML = "<p>Nenhum agendamento finalizado.</p>";
+      return;
+    }
+
+    snapshot.forEach(docSnap => {
+      const ag = docSnap.data();
+      ag.id = docSnap.id;
+
+      const div = document.createElement("div");
+      div.classList.add("agendamento");
+      div.innerHTML = `
+        <p><strong>${ag.nome || "Cliente não informado"}</strong> - ${ag.data} às ${ag.hora}</p>
+        <p>Serviço: ${ag.servico || "Não informado"} | Pagamento: ${ag.pagamento || "Não informado"}</p>
+        <p>Valor: R$ ${ag.valor || "0"},00</p>
+        <button onclick="arquivar('${ag.id}')">Arquivar</button>
+        <button onclick="cancelarAgendamento('${ag.id}', this.parentElement)">Cancelar</button>
+        <hr>
+      `;
+      containerFinalizados.appendChild(div);
+    });
+  });
+
+  window.arquivar = async function(id) {
+    try {
+      const docRef = doc(db, "agendamentos", id);
+      await updateDoc(docRef, { arquivado: true });
+      console.log("Agendamento arquivado com sucesso.");
+    } catch (error) {
+      console.error("Erro ao arquivar agendamento:", error);
+    }
+  };
+
+  window.cancelarAgendamento = async function(id, divElemento) {
+    if (confirm("Tem certeza que deseja cancelar esse agendamento?")) {
+      try {
+        const docRef = doc(db, "agendamentos", id);
+        await deleteDoc(docRef);
+        divElemento.remove();
+        console.log("Agendamento cancelado com sucesso.");
+      } catch (error) {
+        console.error("Erro ao cancelar agendamento:", error);
+      }
+    }
+  };
+});

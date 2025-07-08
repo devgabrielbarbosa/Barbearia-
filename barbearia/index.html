@@ -5,7 +5,7 @@
     <title>Agendamento | Barbearia Rei do Corte</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="img/favicon.ico" type="image/x-icon" />
-    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="../css/style.css" />
     <link
       href="https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap"
       rel="stylesheet"
@@ -13,7 +13,7 @@
   </head>
   <body>
     <header class="cabecalho">
-      <img class="logo" src="./assets/logo.png" alt="" />
+      <img class="logo" src="../assets/logo.png" alt="" />
       <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menu">
         &#9776;
       </button>
@@ -26,6 +26,10 @@
 
     <main>
       <section class="video-corte">
+        <h1>Bem-vindo à Barbearia Rei do Corte</h1>
+        <p>
+          Aqui, estilo e qualidade se encontram para transformar seu visual.
+          Agende seu horário e venha experimentar o melhor atendimento da cidade!
         <video
           width="100%"
           height="250"
@@ -35,13 +39,9 @@
           loop
           playsinline
         >
-          <source src="./assets/video (video-converter.com).mp4" type="video/mp4" />
+          <source src="../assets/video (video-converter.com).mp4" type="video/mp4" />
           Seu navegador não suporta vídeos HTML5.
         </video>
-        <div class="video-overlay">
-          <h1>Barbearia Rei do Corte</h1>
-          <p>Transforme seu visual com estilo e qualidade.</p>
-        </div>
       </section>
 
       <section class="mapa">
@@ -67,16 +67,18 @@
         <h2>Nossos Profissionais</h2>
         <div class="cards">
           <div class="card">
-            <img src="./assets/barbeiro.jpg" alt="João - Barbeiro" />
+            <img src="../assets/Barbearias.-SCA.jpg" alt="João - Barbeiro" />
             <h3>João Silva</h3>
             <p>
-              10 anos de experiência, especialista em fades e cortes modernos.
+              Barbeiro expert em cortes Afros e barba completa, valorizando a identidade e realçando a beleza natural com precisão e estilo único.
             </p>
           </div>
           <div class="card">
-            <img src="./assets/Barbearias.-SCA.jpg" alt="Carlos - Estilo" />
+            <img src="../assets/barbeiro.jpg" alt="Carlos - Estilo" />
             <h3>Carlos Rocha</h3>
-            <p>Expert em cortes Afros e barba completa.</p>
+            <p>
+              10 anos de experiência, especialista em fades e cortes modernos.
+            </p>
           </div>
         </div>
         <div class="destaque">
@@ -111,7 +113,7 @@
 
           <select id="servico" required>
             <option value="">Tipo de serviço</option>
-            <option value="Corte" selected>Corte</option>
+            <option value="Corte">Corte</option>
             <!-- já selecionado -->
             <option value="Barba">Barba</option>
             <option value="Corte + Barba">Corte + Barba</option>
@@ -128,7 +130,7 @@
             <option value="Crédito">Crédito</option>
             <option value="Dinheiro">Dinheiro</option>
           </select>
-          <select id="barbeiro">
+          <select id="barbeiro" required>
             <option value="">Escolha o seu Barbeiro</option>
           </select>
           <div id="totalAPagar">Valor total: <strong>R$ 0,00</strong></div>
@@ -332,7 +334,7 @@
       </div>
     </footer>
 
-    <script type="module" src="js/cliente.js"></script>
-    <script tipe="module" src="js/chat.js"></script>
+    <script type="module" src="../js/cliente.js"></script>
+    <script tipe="module" src="../js/chat.js"></script>
   </body>
 </html>
