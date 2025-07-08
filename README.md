@@ -29,18 +29,31 @@ Configure as credenciais do Firebase no arquivo firebase-config.js
 
 📂 barbearia-rei-do-corte
 ├── index.html
+
 ├── admin.html
+
 ├── arquivados.html
+
 ├── css/
+
 │   └── style.css
+
 ├── js/
+
 │   ├── chatbot.js
+
 │   ├── admin.js
+
 │   ├── arquivados.js
+
 ├── assets/
+
 │   ├── video.mp4
+
 │   └── logo.png
+
 └── firebase-config.js
+
 🙋‍♂️ Autor
 Gabriel Lemos
 Desenvolvedor Front-end & entusiasta em soluções para pequenos negócios
