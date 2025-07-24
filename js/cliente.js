@@ -55,6 +55,7 @@ const dataInput = document.getElementById("data");
 const selectServico = document.getElementById("servico");
 const divValorTotal = document.getElementById("totalAPagar");
 const barbeiroSelect = document.getElementById("barbeiro");
+const telefoneInput = document.getElementById("telefone");
 
 // ✅ Valores dos serviços
 const valores = {
@@ -162,6 +163,7 @@ form.addEventListener("submit", async (e) => {
       status: "Pendente",
       barbeiro,
       arquivado: false,
+      telefone: document.getElementById("telefone").value,
     });
     alert("Agendamento feito com sucesso!");
     form.reset();
@@ -173,11 +175,16 @@ form.addEventListener("submit", async (e) => {
   }
 });
 
-const menuToggle = document.getElementById("menu-toggle");
-const menu = document.getElementById("menu");
+document.addEventListener("DOMContentLoaded", function() {
+  const btn = document.getElementById("menu-toggle");
+  const menu = document.getElementById("menu");
 
-menuToggle.addEventListener("click", () => {
-  menu.classList.toggle("ativo");
+  btn.addEventListener("click", () => {
+    menu.classList.toggle("open");
+  });
+});
+const menuToggle = document.getElementById("menu-toggle");
+menuToggle.addEventListener("click", () => {  
 
   // Acessibilidade: atualiza o atributo ARIA
   const expanded = menuToggle.getAttribute("aria-expanded") === "true";

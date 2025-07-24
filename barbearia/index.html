@@ -13,16 +13,21 @@
   </head>
   <body>
     <header class="cabecalho">
-      <img class="logo" src="../assets/logo.png" alt="" />
-      <button class="menu-toggle" id="menu-toggle" aria-label="Abrir menu">
-        &#9776;
-      </button>
-      <nav class="menu" id="menu">
-        <a href="#">Início</a>
-        <a href="#depoimento">Depoimentos</a>
-        <a href="#agendamento">Agendamento</a>
-      </nav>
-    </header>
+  <img class="logo" src="../assets/logo.png" alt="Logo" />
+
+  <!-- botão hamburguer -->
+  <button id="menu-toggle" class="menu-toggle" aria-label="Abrir menu">
+    &#9776;
+  </button>
+
+  <!-- nav inicialmente escondida no mobile -->
+  <nav id="menu" class="menu">
+    <a href="#">Início</a>
+    <a href="#depoimento">Depoimentos</a>
+    <a href="#agendamento">Agendamento</a>
+  </nav>
+</header>
+
 
     <main>
       <section class="video-corte">
@@ -133,6 +138,10 @@
           <select id="barbeiro" required>
             <option value="">Escolha o seu Barbeiro</option>
           </select>
+          <section>
+            <label for=""></label>
+            <input type="name" id="telefone" placeholder="Telefone" required />
+          </section>
           <div id="totalAPagar">Valor total: <strong>R$ 0,00</strong></div>
 
           <button type="submit">Agendar</button>
@@ -181,112 +190,28 @@
       </section>
 
       <section>
-        <!-- Botão Flutuante WhatsApp -->
-        <div
-          class="chat-toggle"
-          id="abrirChat"
-          style="
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background: #25d366;
-            color: white;
-            padding: 15px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 24px;
-            z-index: 1000;
-          "
-        >
-          💬
-        </div>
+   
+        <button id="abrirChat" class="chat-abrir">
+    💬 Fale conosco
+  </button>
 
-        <!-- Caixa do Chatbot -->
-        <div
-          class="chatbot-container"
-          id="chatContainer"
-          style="
-            display: none;
-            position: fixed;
-            bottom: 80px;
-            right: 20px;
-            width: 300px;
-            max-height: 500px;
-            background: white;
-            border-radius: 10px;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
-            z-index: 999;
-          "
-        >
-          <div
-            class="chat-header"
-            style="
-              color: white;
-              padding: 10px;
-              display: flex;
-              justify-content: space-between;
-              align-items: center;
-            "
-          >
-            <span>🤖 Atendimento Virtual</span>
-            <span id="fecharChat" style="cursor: pointer">✖</span>
-          </div>
+  <div id="chatbot" class="chatbot-container">
+    <div class="chat-header">
+      <h2>RC-Atendente virtual </h2>
+      <button id="fecharChat">✖</button>
+    </div>
+    <div id="chatMessages" class="chat-messages"></div>
+    <div class="chat-input-area">
+      <input
+        type="text"
+        id="userInput"
+        placeholder="Digite sua mensagem..."
+      />
+      <button id="enviarMensagem">➤</button>
+    </div>
+  </div>
 
-          <div
-            class="chat-messages"
-            id="chatMessages"
-            style="
-              padding: 10px;
-              height: 250px;
-              overflow-y: auto;
-              font-family: sans-serif;
-              font-size: 14px;
-            "
-          >
-            <!-- mensagens aparecem aqui -->
-          </div>
-
-          <div
-            class="chat-input"
-            style="display: flex; padding: 10px; border-top: 1px solid #ddd"
-          >
-            <input
-              type="text"
-              id="userInput"
-              placeholder="Digite sua pergunta..."
-              style="flex: 1; padding: 8px"
-            />
-            <button
-              id="enviarMensagem"
-              style="
-                padding: 8px 10px;
-                background: #007bff;
-                color: white;
-                border: none;
-                margin-left: 5px;
-                cursor: pointer;
-              "
-            >
-              Enviar
-            </button>
-          </div>
-
-          <button
-            id="encerrarAtendimento"
-            style="
-              width: 100%;
-              padding: 10px;
-              border: none;
-              background: #ff4d4d;
-              color: white;
-              cursor: pointer;
-              border-bottom-left-radius: 10px;
-              border-bottom-right-radius: 10px;
-            "
-          >
-            Encerrar Atendimento
-          </button>
-        </div>
+  <button id="encerrarAtendimento" style="display: none;"></button>
       </section>
     </main>
 

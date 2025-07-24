@@ -91,29 +91,53 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         div.innerHTML = `
-          <p><strong>${agendamento.nome}</strong> - ${agendamento.data} às ${
-          agendamento.hora
-        } - ${agendamento.servico}</p>
-          <p>Pagamento: ${agendamento.pagamento} | Valor: R$ ${agendamento.valor
-          .toFixed(2)
-          .replace(".", ",")}</p>
-          <p>Status: <strong>${agendamento.status}</strong></p>
-          <p>Barbeiro: ${agendamento.barbeiro || "Não especificado"}</p>
-          ${
-            agendamento.status !== "Confirmado"
-              ? `<button onclick="confirmarAgendamento('${id}')">Confirmar</button>`
-              : ""
-          }
-          <button onclick="cancelarAgendamento('${id}')">Cancelar</button>
-          ${
-            agendamento.status === "Confirmado"
-              ? `<button onclick="finalizarAgendamento('${id}')">Finalizar</button>`
-              : ""
-          }
-        `;
-
+     <p><strong>${agendamento.nome}</strong> – ${agendamento.data} às ${agendamento.hora} – ${agendamento.servico}</p>
+  <p>Pagamento: ${agendamento.pagamento} | Valor: R$ ${agendamento.valor.toFixed(2).replace(".", ",")}</p>
+  <p>Telefone: ${agendamento.telefone || "Não especificado"}</p>
+  <p>Status: <strong>${agendamento.status}</strong></p>
+  <p>Barbeiro: ${agendamento.barbeiro || "Não especificado"}</p>
+  ${agendamento.status !== "Confirmado" ? `<button onclick="confirmarAgendamento('${id}')">Confirmar</button>` : ""}
+  <button onclick="cancelarAgendamento('${id}')">Cancelar</button>
+  ${agendamento.status === "Confirmado" ? `<button onclick="finalizarAgendamento('${id}')">Finalizar</button>` : ""}
+  ${agendamento.telefone ? `
+    <button class="btn-whatsapp"
+            data-nome="${agendamento.nome}"
+            data-tel="${agendamento.telefone}"
+            data-data="${agendamento.data}"
+            data-hora="${agendamento.hora}"
+            data-barbeiro="${agendamento.barbeiro || ''}">
+      WhatsApp
+    </button>
+  ` : ""}
+`;
         lista.appendChild(div);
       }
+      // Deve rodar depois de todos os agendamentos serem renderizados
+document.querySelectorAll('.btn-whatsapp').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const nome    = btn.dataset.nome;
+    const tel     = btn.dataset.tel.replace(/\D/g, '');
+    const data    = btn.dataset.data;
+    const hora    = btn.dataset.hora;
+    const barbeiro= btn.dataset.barbeiro;
+
+    notificarWhatsApp(nome, tel, data, hora, barbeiro);
+  });
+});
+
+function notificarWhatsApp(nome, telefone, data, hora, barbeiro) {
+  const msg = encodeURIComponent(
+    `Olá Sr(a). ${nome}, seu agendamento para ${data} às ${hora} foi confirmado. O barbeiro será ${barbeiro}.`
+  );
+  window.open(
+    `https://wa.me/${telefone}?text=${msg}`,
+    "_blank"
+  );
+}
+
+// garante que ela fique disponível globalmente
+window.notificarWhatsApp = notificarWhatsApp;
+
 
       if (["Confirmado", "Finalizado"].includes(agendamento.status)) {
         pagamentosPorTipo[agendamento.pagamento] += agendamento.valor;
@@ -201,6 +225,7 @@ document.addEventListener("DOMContentLoaded", () => {
       <p><strong>${item.nome || "Cliente não informado"}</strong> - ${item.data} às ${item.hora}</p>
       <p>Serviço: ${item.servico || "Não informado"} | Pagamento: ${item.pagamento || "Não informado"}</p>
       <p>Valor: R$ ${item.valor || "0"},00</p>
+      <p>Nuumero: <strong>${item.numero}</strong></p>
       ${botoes}
       <hr>
     `;
